@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{% static "assets/img/home-bg.jpg" %}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Clean Blog</h1>
+                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5 justify-content-center">
+            {% if messages %}
+            {% for message in messages %}
+            
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+                
+            {% endfor %}
+            {% endif %}
+            
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <form method="GET">
+                        <input type='text' name='q' placeholder="Search from posts...">
+                        <button type="submit">Search</button>
+                    </form>
+                    <br>
+                </div>
+                <hr>
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    {% for obj in objs %}
+                        <div class="post-preview">
+                            <a href="{% url 'detail' obj.id %}">
+                                <h2 class="post-title">{{ obj.title }}</h2>
+                                <h3 class="post-subtitle">{{ obj.subtitle }}</h3>
+                            </a>
+                            <p class="post-meta">
+                                Posted by
+                                <a href="#">{{ obj.author }}</a>
+                                on {{ obj.date_published|date:"F d, Y" }} 
+                            </p>
+                        </div>
+                        <br>
+                    {% endfor %}
+
+                        <div class="d-flex justify-content-center"><a class="btn btn-success text-uppercase" href="{% url 'create' %}">ADD POST</a></div>
+                        <!-- Divider-->
+                        <hr class="my-4" />
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-end mb-4">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a class="btn btn-primary text-uppercase" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                            {% endif %}
+                    
+                            <span class="current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+                    
+                            {% if page_obj.has_next %}
+                                <a class="btn btn-primary text-uppercase" href="?page={{ page_obj.next_page_number }}">next</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock content %}

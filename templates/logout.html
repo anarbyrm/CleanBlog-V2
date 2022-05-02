@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{% static "assets/img/home-bg.jpg" %}')"><div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="site-heading">
+                <h1>LOGOUT</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div class="container d-flex justify-content-center w-25 p-3 border border-primary rounded">
+        <form method="post">
+            {% csrf_token %}
+            <h5>{{ request.user.username }}, are you sure to logout?</h5>
+            <input type="submit" class="btn btn-danger" value="LOGOUT">
+            <a href="{% url 'home' %}" class="btn btn-primary btn" role="button" aria-pressed="true">HOME PAGE</a>
+        </form>
+    </div>
+    <br>
+
+
+{% endblock content %}
